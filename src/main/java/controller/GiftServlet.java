@@ -14,13 +14,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@WebServlet("")
+@WebServlet("/")
 public class GiftServlet extends HttpServlet {
     private final GiftService service = new GiftService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Gifts> gifts = service.getAllGifts();
-        request.setAttribute("gifts", gifts);
-        request.getRequestDispatcher("/gifts.ftl").forward(request, response);
+        try {
+            List<Gifts> gifts = service.getAllGifts();
+            request.setAttribute("gifts", gifts);
+            request.getRequestDispatcher("WEB-INF/template/gifts.jsp").forward(request, response);
+        } catch (IOException | ServletException e) {
+            System.out.println(e);
+        }
     }
 }

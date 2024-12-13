@@ -17,9 +17,15 @@ public class GiftDetailServlet extends HttpServlet {
     private final GiftService giftService = new GiftService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long id = Long.parseLong(request.getParameter("id"));
-        Gifts gift = giftService.getGiftById(id);
-        request.setAttribute("gift", gift);
-        request.getRequestDispatcher("/giftDetail.ftl").forward(request, response);
+        try {
+            Long id = Long.parseLong(request.getParameter("id"));
+            Gifts gift = giftService.getGiftById(id);
+            request.setAttribute("gift", gift);
+            request.getRequestDispatcher("WEB-INF/template/giftDetail.jsp").forward(request, response);
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (ServletException e) {
+            System.out.println(e);
+        }
     }
 }
